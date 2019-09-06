@@ -1,0 +1,6 @@
+---
+# defaults file for IslandoraDevops.riprap
+riprap_home: /var/www/html
+webserver_app_user: "{% if ansible_os_family == 'RedHat' %}apache{% else %}www-data{% endif %}"
+settings_dir: /var/www/html/drupal/web/sites/default
+private_file_dir: /var/www/html/private

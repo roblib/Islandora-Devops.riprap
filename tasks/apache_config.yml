@@ -1,0 +1,31 @@
+- name: restart apache
+  service:
+    name: apache2
+    state: restarted
+
+
+- name: Create httpd config directories for CentOS
+  file:
+    path: "{{httpd_conf_directory}}/{{ item }}/"
+    state: directory
+    mode: "urwx,gr,o-rwx"
+  with_items:
+    - "conf-available"
+    - "conf-enabled"
+  when: ansible_os_family == "RedHat"
+
+- name: Install riprap httpd config file
+  template:
+    src: "riprap.conf.j2"
+    dest: "{{httpd_conf_directory}}/conf-available/riprap.conf"
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+
+- name: Symlink matomo httpd config file into action
+  file:
+    src: "{{httpd_conf_directory}}/conf-available/riprap.conf"
+    dest: "{{httpd_conf_directory_enabled}}/riprap.conf"
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    state: link
+  notify: restart apache

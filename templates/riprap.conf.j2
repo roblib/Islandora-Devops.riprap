@@ -1,0 +1,8 @@
+  Alias "/api/fixity" "{{ riprap_home }}/riprap/public"
+  <Directory "{{ riprap_home }}/riprap/public">
+    FallbackResource /index.php
+    Require all granted
+    DirectoryIndex index.php
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+  </Directory>
+

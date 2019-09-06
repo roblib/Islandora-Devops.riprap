@@ -1,0 +1,15 @@
+- name: "Create Private directory"
+  file:
+    path: "{{ private_file_dir }}"
+    state: directory
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    mode: 0755
+
+- name: Create Private subdirectory
+  file:
+    path: "{{ private_file_dir }}/riprap_config"
+    state: directory
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    mode: 0755
