@@ -73,9 +73,6 @@
 - name: Enable JSON:API module (not currently enabled by default
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en jsonapi"
 
-
-
-
 - name: Add Islandora Ansible Routes
   blockinfile:
     path: "{{ riprap_home }}/riprap/config/routes.yaml"
@@ -107,50 +104,20 @@
     path: "{{ settings_dir }}/settings.php"
     line: "$settings['file_private_path'] = '{{ private_file_dir }}';"
 
-- name: Build config file
-  blockinfile:
-    path: "{{ private_file_dir }}/riprap_config/islandora_riprap_config.yml"
-    create: yes
-    block: |
-      # Riprap config file for using Islandora/database plugins.
+- name: Create target directory
+  file:
+    path: "{{ private_file_dir }}/riprap_config"
+    state: directory
+    mode: '0755'
+  become: yes
 
-      ####################
-      # General settings #
-      ####################
-
-      fixity_algorithm: sha256
-
-      ###########
-      # Plugins #
-      ###########
-
-      plugins.fetchresourcelist: ['PluginFetchResourceListFromDrupal']
-      drupal_baseurl: '{{ crayfish_drupal_base_url }}'
-      # admin/islandora
-      jsonapi_authorization_headers: ['Authorization: Basic YWRtaW46aXNsYW5kb3Jh']
-      drupal_media_auth: ['{{ drupal_account_name }}', '{{ drupal_account_pass }}']
-      drupal_content_types: ['islandora_rdm_dataset']
-      drupal_media_tags: ['/taxonomy/term/17']
-      use_fedora_urls: true
-      gemini_endpoint: '{{ crayfish_gemini_base_url }}'
-      gemini_auth_header: 'Bearer islandora'
-      # Can be a maximum of 50.
-      jsonapi_page_size: 50
-      # The number of resources to check in one Riprap run; if absent, will use
-      # value defined in jsonapi_page_size. Must be a multiple of number specified
-      # in jsonapi_page_size.
-      max_resources: 1000
-      jsonapi_pager_data_file_path: '{{ riprap_home }}/riprap/var/fetchresourcelist.from.drupal.pager.txt'
-
-      plugins.fetchdigest: PluginFetchDigestFromFedoraAPI
-      fedoraapi_method: HEAD
-      fedoraapi_digest_header_leader_pattern: "^.+="
-
-      plugins.persist: PluginPersistToDatabase
-
-      plugins.postcheck: ['PluginPostCheckCopyFailures']
-      # Absolute or relative to the Riprap application directory.
-      failures_log_path: '/tmp/riprap_failed_events.log'
+- name: Install riprap RDM config file
+  template:
+    src: "riprap_config.j2"
+    dest: "{{ private_file_dir }}/riprap_config/islandora_riprap_config.yml"
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+  become:
 
 
 - name: Create daily cron job
