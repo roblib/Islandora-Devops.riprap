@@ -108,7 +108,9 @@
   file:
     path: "{{ private_file_dir }}/riprap_config"
     state: directory
-    mode: '0755'
+    owner: "{{ webserver_app_user }}"
+    group: "{{ webserver_app_user }}"
+    mode: '0777'
   become: yes
 
 - name: Install riprap RDM config file
@@ -117,7 +119,7 @@
     dest: "{{ private_file_dir }}/riprap_config/islandora_riprap_config.yml"
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
-  become:
+  become_user: root
 
 
 - name: Create daily cron job
