@@ -20,7 +20,7 @@
     owner: "{{ webserver_app_user }}"
     group: "{{ webserver_app_user }}"
 
-- name: Symlink matomo httpd config file into action
+- name: Symlink riprap httpd config file into action
   file:
     src: "{{httpd_conf_directory}}/conf-available/riprap.conf"
     dest: "{{httpd_conf_directory_enabled}}/riprap.conf"
