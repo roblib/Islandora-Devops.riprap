@@ -51,15 +51,6 @@
 - name: Enable Riprap drupal module
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_riprap"
 
-- name: Create Config directory
-  file:
-    path: "{{ drupal_core_path }}/modules/contrib/islandora_riprap/config/optional"
-    state: directory
-    owner: "{{ webserver_app_user }}"
-    group: "{{ webserver_app_user }}"
-    mode: 0755
-
-
 - name: Add RDM config
   copy:
     dest: "{{ drupal_core_path }}/modules/contrib/islandora_riprap/config/optional/slandora_riprap.settings.yml"
