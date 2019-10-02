@@ -124,17 +124,3 @@
   service:
     name: apache2
     state: restarted
-
-
-# Installation.
-- name: Install Rudamentary Mailer (RedHat).
-  yum:
-    name: "{{ sendmail_package }}"
-    state: present
-  when: ansible_os_family == 'RedHat'
-
-- name: Install Rudamentary Mailer (Debian).
-  apt:
-    name: "{{ sendmail_package }}"
-    state: present
-  when: ansible_os_family == 'Debian'
