@@ -53,7 +53,7 @@
 
 - name: Add RDM config
   copy:
-    dest: "{{ drupal_core_path }}/modules/contrib/islandora_riprap/config/optional/slandora_riprap.settings.yml"
+    dest: "{{ drupal_core_path }}/modules/contrib/islandora_riprap/config/optional/islandora_riprap.settings.yml"
     content: |
       riprap_rest_endpoint: 'http://localhost/api/fixity'
       number_of_events: '10'
