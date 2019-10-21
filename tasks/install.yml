@@ -39,20 +39,7 @@
   command: "composer update"
   args:
     chdir: "{{ riprap_home }}/riprap"
-
   become_user:  "{{ webserver_app_user }}"
-
-- name: Install Drupal Islandora Riprap module from Github
-  git:
-    repo: https://github.com/mjordan/islandora_riprap.git
-    dest: "{{ drupal_core_path }}/modules/contrib/islandora_riprap"
-    force: yes
-
-- name: Enable Riprap drupal module
-  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_riprap"
-
-- name: Enable JSON:API module (not currently enabled by default
-  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en jsonapi"
 
 - name: Add Islandora Ansible Routes
   blockinfile:
@@ -102,6 +89,31 @@
     group: "{{ webserver_app_user }}"
   become_user: root
 
+- name: Install Drupal Islandora Riprap module from Github
+  git:
+    repo: https://github.com/mjordan/islandora_riprap.git
+    dest: "{{ drupal_core_path }}/modules/contrib/islandora_riprap"
+    force: yes
+
+- name: Enable Riprap drupal module
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en islandora_riprap"
+
+- name: Enable JSON:API module (not currently enabled by default
+  command: "{{ drush_path }} --root {{ drupal_core_path }} -y en jsonapi"
+- name: Set Riprap rest endpoint
+  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings riprap_rest_endpoint {{ riprap_rest_endpoint }} -y"
+
+- name: Set Riprap gemini endpoint
+  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings gemini_rest_endpoint {{ riprap_gemini_rest_endpoint }} -y"
+
+- name: Set default content type
+  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings fixity_content_type {{ default_data_type }} -y"
+
+- name: Set login creds
+  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings user_name {{ drupal_account_name }} -y"
+
+- name: Set login creds
+  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings user_pass {{ drupal_account_pass }} -y"
 
 - name: Create daily cron job
   cron:
