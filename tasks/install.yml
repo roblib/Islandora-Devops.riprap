@@ -101,19 +101,19 @@
 - name: Enable JSON:API module (not currently enabled by default
   command: "{{ drush_path }} --root {{ drupal_core_path }} -y en jsonapi"
 - name: Set Riprap rest endpoint
-  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings riprap_rest_endpoint {{ riprap_rest_endpoint }} -y"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings riprap_rest_endpoint {{ riprap_rest_endpoint }} -y"
 
 - name: Set Riprap gemini endpoint
-  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings gemini_rest_endpoint {{ riprap_gemini_rest_endpoint }} -y"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings gemini_rest_endpoint {{ riprap_gemini_rest_endpoint }} -y"
 
 - name: Set default content type
-  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings fixity_content_type {{ default_data_type }} -y"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings fixity_content_type {{ default_data_type }} -y"
 
 - name: Set login creds
-  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings user_name {{ drupal_account_name }} -y"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings user_name {{ drupal_account_name }} -y"
 
 - name: Set login creds
-  command: "{{ drush_path }} --root {{ drupal_core_path }} riprap.settings user_pass {{ drupal_account_pass }} -y"
+  command: "{{ drush_path }} --root {{ drupal_core_path }} cset islandora_riprap.settings user_pass {{ drupal_account_pass }} -y"
 
 - name: Create daily cron job
   cron:
