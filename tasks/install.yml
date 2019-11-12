@@ -91,7 +91,7 @@
 
 - name: Install Drupal Islandora Riprap module from Github
   git:
-    repo: https://github.com/mjordan/islandora_riprap.git
+    repo: https://github.com/roblib/islandora_riprap.git
     dest: "{{ drupal_core_path }}/modules/contrib/islandora_riprap"
     force: yes
 
