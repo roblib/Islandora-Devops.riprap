@@ -29,7 +29,7 @@
 
 - name: Open permissions on riprap cache
   file:
-    path: ":{{ riprap_home }}/riprap/var/cache"
+    path: "{{ riprap_home }}/riprap/var/cache"
     owner:  "{{ webserver_app_user }}"
     group:  "{{ webserver_app_user }}"
     mode: '0777'
