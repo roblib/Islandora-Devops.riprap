@@ -67,10 +67,7 @@
     regexp: 'DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db'
     line: 'DATABASE_URL=mysql://{{ drupal_db_user}}:{{ drupal_db_password }}@127.0.0.1:3306/{{ drupal_db_name }}'
 
-- name: Edit Drupal's Setting file
-  lineinfile:
-    path: "{{ settings_dir }}/settings.php"
-    line: "$settings['file_private_path'] = '{{ private_file_dir }}';"
+
 
 - name: Create target directory
   file:
