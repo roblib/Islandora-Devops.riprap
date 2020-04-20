@@ -1,39 +1,39 @@
-  # Riprap config file for using Islandora/database plugins.
+# Riprap config file for using Islandora/database plugins.
 
-  ####################
-  # General settings #
-  ####################
+####################
+# General settings #
+####################/tmp/riprap_failed_events.log
 
-  fixity_algorithm: sha256
+fixity_algorithm: sha256
 
-  ###########
-  # Plugins #
-  ###########
+###########
+# Plugins #
+###########
 
-  plugins.fetchresourcelist: ['PluginFetchResourceListFromDrupal']
-  drupal_baseurl: '{{ crayfish_drupal_base_url }}'
-  # admin/islandora
-  jsonapi_authorization_headers: ['Authorization: Basic YWRtaW46aXNsYW5kb3Jh']
-  drupal_media_auth: ['{{ drupal_account_name }}', '{{ drupal_account_pass }}']
-  drupal_content_types: ['{{ riprap_content_type }}']
-  drupal_media_tags: ['/taxonomy/term/17']
-  use_fedora_urls: true
-  gemini_endpoint: '{{ crayfish_gemini_base_url }}'
-  gemini_auth_header: 'Bearer islandora'
-  # Can be a maximum of 50.
-  jsonapi_page_size: 50
-  # The number of resources to check in one Riprap run; if absent, will use
-  # value defined in jsonapi_page_size. Must be a multiple of number specified
-  # in jsonapi_page_size.
-  max_resources: 1000
-  jsonapi_pager_data_file_path: '{{ riprap_home }}/riprap/var/fetchresourcelist.from.drupal.pager.txt'
+plugins.fetchresourcelist: ['PluginFetchResourceListFromDrupal']
+drupal_baseurl: '{{ crayfish_drupal_base_url }}'
+# admin/islandora
+jsonapi_authorization_headers: ['Authorization: Basic YWRtaW46aXNsYW5kb3Jh']
+drupal_media_auth: ['{{ drupal_account_name }}', '{{ drupal_account_pass }}']
+drupal_content_types: ['{{ riprap_content_type }}']
+drupal_media_tags: ['/taxonomy/term/17']
+use_fedora_urls: true
+gemini_endpoint: '{{ crayfish_gemini_base_url }}'
+gemini_auth_header: 'Bearer islandora'
+# Can be a maximum of 50.
+jsonapi_page_size: 50
+# The number of resources to check in one Riprap run; if absent, will use
+# value defined in jsonapi_page_size. Must be a multiple of number specified
+# in jsonapi_page_size.
+max_resources: 1000
+jsonapi_pager_data_file_path: '{{ riprap_home }}/riprap/var/fetchresourcelist.from.drupal.pager.txt'
 
-  plugins.fetchdigest: PluginFetchDigestFromFedoraAPI
-  fedoraapi_method: HEAD
-  fedoraapi_digest_header_leader_pattern: "^.+="
+plugins.fetchdigest: PluginFetchDigestFromFedoraAPI
+fedoraapi_method: HEAD
+fedoraapi_digest_header_leader_pattern: "^.+="
 
-  plugins.persist: PluginPersistToDatabase
+plugins.persist: PluginPersistToDatabase
 
-  plugins.postcheck: ['PluginPostCheckCopyFailures']
-  # Absolute or relative to the Riprap application directory.
-  failures_log_path: '/tmp/riprap_failed_events.log'
+plugins.postcheck: ['PluginPostCheckCopyFailures']
+# Absolute or relative to the Riprap application directory.
+failures_log_path: '/tmp/riprap_failed_events.log'
