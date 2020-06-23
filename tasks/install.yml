@@ -35,12 +35,6 @@
     mode: '0777'
     recurse: True
 
-- name: Composer Update Riprap Microservice
-  command: "composer update"
-  args:
-    chdir: "{{ riprap_home }}/riprap"
-  become_user:  "{{ webserver_app_user }}"
-
 - name: Add Islandora Ansible Routes
   blockinfile:
     path: "{{ riprap_home }}/riprap/config/routes.yaml"
